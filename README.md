@@ -6,6 +6,8 @@ Este proyecto explora técnicas de adaptación de dominio para mejorar el rendim
 
 Optimizar representaciones vectoriales para datos médicos en español, mejorando la recuperación semántica en contextos especializados mediante técnicas sin supervisión como *Generative Pseudo Labeling* (GPL) y entrenamiento con funciones de pérdida basadas en triplets.
 
+![Diagrama de Adaptación de Dominio - Flujo de generacion de datos etiquetados](./imgs/domain_adaptation_data.png)
+
 ## Metodología
 
 * **Corpus**: Se utilizó CoWeSe, un corpus biomédico web en español (750M tokens), del cual se extrajo una muestra representativa y se aplicaron filtros de calidad y relevancia médica.
