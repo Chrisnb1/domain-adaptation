@@ -1,0 +1,137 @@
+# -----------------------------------------------------------------------------
+# MODELOS DE EMBEDDING
+# -----------------------------------------------------------------------------
+embedding_model:
+  id: "somosnlp-hackathon-2022/paraphrase-spanish-distilroberta"
+  name: "paraphrase-spanish-distilroberta"
+  cache_dir: "./models_cache"
+  device: "auto"  # auto, cuda, cpu
+  
+# Modelo generativo (para generación de preguntas)
+generative_model:
+   model_name: gemma3:4b
+   temperature: 0.1
+   num_predict: 500
+   repeat_penalty: 1.1
+   top_k: 10
+   top_p: 0.9
+   min_words: 15
+   min_chars: 100
+
+# -----------------------------------------------------------------------------
+# GENERACIÓN DE PREGUNTAS (SISTEMA ORIGINAL)
+# -----------------------------------------------------------------------------
+question_generation:
+  system_prompt: >
+    Eres un evaluador especializado en contenido médico y de salud. Tu ÚNICA tarea es evaluar si un texto es relevante para medicina/salud y, si lo es, generar exactamente 3 preguntas.
+
+    **REGLAS ESTRICTAS:**
+
+    1. **EVALUACIÓN DE RELEVANCIA:** El texto debe estar relacionado con:
+       - Medicina, salud, enfermedades, tratamientos
+       - Anatomía, fisiología, farmacología
+       - Biomedicina, investigación clínica
+       - Políticas sanitarias, epidemiología
+       - Enfermería, cuidados médicos
+
+    2. **EVALUACIÓN DE SUFICIENCIA:** El texto debe:
+       - Tener al menos 15 palabras
+       - Contener información específica y clara
+       - NO ser ambiguo o demasiado general
+
+    3. **RESPUESTAS PERMITIDAS:**
+       
+       **Opción A** - Si NO es relevante O es insuficiente:
+       ```
+       Este tema no es relevante.
+       ```
+       
+       **Opción B** - Si ES relevante Y suficiente:
+       ```json
+       {{
+         "question_1": "¿Pregunta específica sobre el contenido?",
+         "question_2": "¿Otra pregunta relacionada con el tema?", 
+         "question_3": "¿Tercera pregunta que profundice en el contenido?"
+       }}
+       ```
+
+    4. **PROHIBIDO:**
+       - Agregar explicaciones adicionales
+       - Usar otros formatos de respuesta
+       - Generar menos de 3 preguntas cuando es relevante
+       - Inventar información no presente en el contexto
+
+    **IMPORTANTE:** Responde SOLO con una de las dos opciones permitidas. Nada más.
+
+# -----------------------------------------------------------------------------
+# FILTRADO Y VALIDACIÓN DE CONTENIDO MÉDICO
+# -----------------------------------------------------------------------------
+content_validation:
+   # Criterios de relevancia
+   min_words: 15
+   min_chars: 100
+   
+     # Palabras clave médicas
+   health_keywords:
+     - salud
+     - medicina
+     - médico
+     - enfermedad
+     - síntoma
+     - tratamiento
+     - hospital
+     - clínica
+     - paciente
+     - diagnóstico
+     - terapia
+     - medicamento
+     - fármaco
+     - cirugía
+     - anatomía
+     - patología
+     - biomedicina
+     - sanitario
+     - prevención
+     - vacuna
+     - virus
+     - bacteria
+     - infección
+     - dolor
+     - cáncer
+     - diabetes
+     - corazón
+     - sangre
+     - cerebro
+     - respiratorio
+
+# -----------------------------------------------------------------------------
+# CONFIGURACIÓN DE ENTRENAMIENTO
+# -----------------------------------------------------------------------------
+training:
+   # Hiperparámetros principales
+   batch_size: 32
+   num_epochs: 30
+   per_device_train_batch_size: 32
+   per_device_eval_batch_size: 16
+   learning_rate: "2e-5"
+   warmup_ratio: 0.1
+   fp16: True
+   bf16: False
+   lr_scheduler_type: cosine
+   optim: adamw_torch_fused
+   eval_strategy: steps
+   eval_steps: 200
+   save_strategy: steps
+   save_steps: 200
+   save_total_limit: 2
+   logging_steps: 50
+   report_to: wandb
+   loss:
+      tpl_loss: True
+      mnrl_loss: True
+
+# -----------------------------------------------------------------------------
+# CONFIGURACIÓN DE REPRODUCIBILIDAD
+# -----------------------------------------------------------------------------
+reproducibility:
+  seed: 42
