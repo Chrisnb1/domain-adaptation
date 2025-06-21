@@ -6,7 +6,7 @@ Este proyecto explora técnicas de adaptación de dominio para mejorar el rendim
 
 Optimizar representaciones vectoriales para datos médicos en español, mejorando la recuperación semántica en contextos especializados mediante técnicas sin supervisión como *Generative Pseudo Labeling* (GPL) y entrenamiento con funciones de pérdida basadas en triplets.
 
-![Diagrama de Adaptación de Dominio - Flujo de generacion de datos etiquetados](./imgs/domain_adaptation_data.png)
+![Diagrama de Adaptación de Dominio - Flujo de generacion de datos etiquetados](./imgs/domain_adaptation.png)
 
 ## Metodología
 
