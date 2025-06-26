@@ -1,6 +1,6 @@
 # Adaptación de Dominio en Embeddings
 
-<a href="www.linkedin.com/in/christian-n-botta"><img src="https://img.shields.io/badge/Follow%20Jay-blue.svg?logo=linkedin"></a>
+<a href="www.linkedin.com/in/christian-n-botta/"><img src="https://img.shields.io/badge/Follow%20Chris-blue.svg?logo=linkedin"></a>
 
 Este proyecto explora técnicas de adaptación de dominio para mejorar el rendimiento de modelos de embeddings en el ámbito médico en español. Se parte de un modelo preentrenado y se ajusta su representación semántica utilizando datos sintéticos generados automáticamente a partir de un corpus biomédico.
 
